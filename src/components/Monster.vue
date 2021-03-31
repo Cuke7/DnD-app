@@ -1,5 +1,5 @@
 <template>
-    <v-card class="my-6 mx-12">
+    <v-card class="my-6 mx-auto" max-width="1500" dense>
         <v-row align="center" justify="space-around">
             <v-col cols="2" class="text-center" v-if="monster.img_url">
                 <v-avatar size="150">
@@ -7,7 +7,6 @@
                     <v-icon v-else>mdi-play</v-icon>
                 </v-avatar>
             </v-col>
-
             <v-col cols="5" class="text-center">
                 <v-row>
                     <strong>{{ monster.nom }}</strong>

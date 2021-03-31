@@ -8,14 +8,12 @@
 
         <v-main>
             <RencontreUI @newMonsters="newMonsters"></RencontreUI>
-            <draggable v-if="monsters.length > 0" class="list-group" v-model="monsters" v-bind="dragOptions" @start="drag = true" @end="drag = false">
+            <draggable class="list-group"  v-bind="dragOptions" @start="drag = true" @end="drag = false">
                 <transition-group type="transition" :name="!drag ? 'flip-list' : null">
                     <Monster v-for="monster in monsters" v-bind:key="monster.key" :monster="monster"></Monster>
+                    <Player v-for="player in players" v-bind:key="player.key" :player="player"></Player>
                 </transition-group>
             </draggable>
-            <div class="text-center" v-else>
-                Aucun monstre trouvé.
-            </div>
         </v-main>
     </v-app>
 </template>
@@ -24,6 +22,7 @@
 import Monster from "./components/Monster";
 import RencontreUI from "./components/RencontreUI";
 import draggable from "vuedraggable";
+import Player from "./components/Player";
 
 export default {
     name: "App",
@@ -32,11 +31,42 @@ export default {
         Monster,
         draggable,
         RencontreUI,
+        Player,
     },
 
     data: () => ({
         monsters: [],
         drag: false,
+        players: [
+            {
+                nom: "Caedus",
+                avatar_url: "https://www.aidedd.org/assets/regles/classes/_resampled/ResizedImageWzQ4Niw2NzZd/eldritch.jpg",
+                CA: 17,
+                caracs: { FOR: "20 (+5)", DEX: "14 (+2)", CON: "10 (+0)", INT: "10 (+0)", SAG: "11 (+0)", CHA: "13 (+1)" },
+                key: 997,
+            },
+            {
+                nom: "Corinne",
+                avatar_url: "https://www.aidedd.org/assets/regles/classes/paladin.jpg",
+                CA: 16,
+                caracs: { FOR: "20 (+5)", DEX: "14 (+2)", CON: "10 (+0)", INT: "10 (+0)", SAG: "11 (+0)", CHA: "13 (+1)" },
+                key: 998,
+            },
+            {
+                nom: "Stor",
+                avatar_url: "https://www.aidedd.org/assets/regles/classes/druide.jpg",
+                CA: 15,
+                caracs: { FOR: "20 (+5)", DEX: "14 (+2)", CON: "10 (+0)", INT: "10 (+0)", SAG: "11 (+0)", CHA: "13 (+1)" },
+                key: 999,
+            },
+            {
+                nom: "Matt",
+                avatar_url: "https://www.aidedd.org/assets/regles/classes/sorcier.jpg",
+                CA: -1,
+                caracs: { FOR: "20 (+5)", DEX: "14 (+2)", CON: "10 (+0)", INT: "10 (+0)", SAG: "11 (+0)", CHA: "13 (+1)" },
+                key: 1000,
+            },
+        ],
     }),
     methods: {
         newMonsters: function(monsters) {

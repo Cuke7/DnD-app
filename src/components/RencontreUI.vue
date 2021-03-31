@@ -1,24 +1,24 @@
 <template>
-    <v-row class="ma-6" justify="space-around" align="center">
-        <v-col cols="3">
+    <v-row class="my-6 mx-12" justify="space-around" align="center">
+        <v-col cols="4" class="text-center">
             <v-range-slider color="primary" track-color="secondary" thumb-label="always" persistent-hint hint="Niveau de FP" v-model="FP_range" max="33" min="0" step="1">
                 <template v-slot:thumb-label="{ value }">
                     {{ values[value] }}
                 </template>
             </v-range-slider>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="3" class="text-center">
             <v-select v-model="al1" :items="align1" label="Morale"></v-select>
             <v-select v-model="al2" :items="align2" label="Éthique"></v-select>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" class="text-center">
             <v-text-field v-model="number" label="Nombre de monstres"></v-text-field>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" class="text-center">
             <v-switch v-model="ident" :label="`Monstres identiques`"></v-switch>
         </v-col>
 
-        <v-col cols="2">
+        <v-col cols="1" class="text-center">
             <v-btn :loading="loading" color="primary" @click="generate_rencontre()">Generate</v-btn>
         </v-col>
     </v-row>
