@@ -1,5 +1,7 @@
 # dnd-app
 
+## Attention, utiliser http://127.0.0.1:8080/ pour que l'API fonctionne
+
 ## Project setup
 ```
 npm install
