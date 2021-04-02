@@ -8,10 +8,9 @@
 
         <v-main>
             <RencontreUI @newMonsters="newMonsters"></RencontreUI>
-            <draggable class="list-group"  v-bind="dragOptions" @start="drag = true" @end="drag = false">
+            <draggable class="list-group" v-model="entities" v-bind="dragOptions" @start="drag = true" @end="drag = false">
                 <transition-group type="transition" :name="!drag ? 'flip-list' : null">
-                    <Monster v-for="monster in monsters" v-bind:key="monster.key" :monster="monster"></Monster>
-                    <Player v-for="player in players" v-bind:key="player.key" :player="player"></Player>
+                    <Entity v-for="(entity, index) in entities" v-bind:key="index" :entity="entity"></Entity>
                 </transition-group>
             </draggable>
         </v-main>
@@ -19,61 +18,81 @@
 </template>
 
 <script>
-import Monster from "./components/Monster";
+//import Monster from "./components/Monster";
 import RencontreUI from "./components/RencontreUI";
 import draggable from "vuedraggable";
-import Player from "./components/Player";
+//import Player from "./components/Player";
+import Entity from "./components/Entity";
 
 export default {
     name: "App",
 
     components: {
-        Monster,
+        //Monster,
         draggable,
         RencontreUI,
-        Player,
+        //Player,
+        Entity,
     },
 
     data: () => ({
         monsters: [],
         drag: false,
-        players: [
+        entities: [],
+        entities_default: [
             {
                 nom: "Caedus",
                 avatar_url: "https://www.aidedd.org/assets/regles/classes/_resampled/ResizedImageWzQ4Niw2NzZd/eldritch.jpg",
                 CA: 17,
                 caracs: { FOR: "20 (+5)", DEX: "14 (+2)", CON: "10 (+0)", INT: "10 (+0)", SAG: "11 (+0)", CHA: "13 (+1)" },
-                key: 997,
+                type: "Haut-elfe",
+                taille: "M",
+                alignement: "CB",
+                vitesse_details: "9 m",
+                isPlayer: true,
             },
             {
                 nom: "Corinne",
                 avatar_url: "https://www.aidedd.org/assets/regles/classes/paladin.jpg",
                 CA: 16,
                 caracs: { FOR: "20 (+5)", DEX: "14 (+2)", CON: "10 (+0)", INT: "10 (+0)", SAG: "11 (+0)", CHA: "13 (+1)" },
-                key: 998,
+                type: "Dragon",
+                taille: "M",
+                alignement: "NN",
+                vitesse_details: "8 m",
+                isPlayer: true,
             },
             {
                 nom: "Stor",
                 avatar_url: "https://www.aidedd.org/assets/regles/classes/druide.jpg",
                 CA: 15,
                 caracs: { FOR: "20 (+5)", DEX: "14 (+2)", CON: "10 (+0)", INT: "10 (+0)", SAG: "11 (+0)", CHA: "13 (+1)" },
-                key: 999,
+                type: "Humain",
+                taille: "M",
+                alignement: "CN",
+                vitesse_details: "9 m",
+                isPlayer: true,
             },
             {
                 nom: "Matt",
                 avatar_url: "https://www.aidedd.org/assets/regles/classes/sorcier.jpg",
                 CA: -1,
                 caracs: { FOR: "20 (+5)", DEX: "14 (+2)", CON: "10 (+0)", INT: "10 (+0)", SAG: "11 (+0)", CHA: "13 (+1)" },
-                key: 1000,
+                type: "Haut-elfe",
+                taille: "TP",
+                alignement: "CM",
+                vitesse_details: "5 m",
+                isPlayer: true,
             },
         ],
     }),
     methods: {
         newMonsters: function(monsters) {
-            this.monsters = monsters;
+            this.entities = this.entities_default;
+            this.entities = this.entities.concat(monsters);
         },
     },
-    // For the drag stuff
+    // For the dragagable stuff
     computed: {
         dragOptions() {
             return {
@@ -84,13 +103,17 @@ export default {
             };
         },
     },
+    mounted: function() {
+        this.$nextTick(function() {
+            this.entities = this.entities_default;
+        });
+    },
 };
 </script>
 
+
 <style scoped>
-.button {
-    margin-top: 35px;
-}
+/* CSS styles for the transitionof the draggable components */
 .flip-list-move {
     transition: transform 0.5s;
 }

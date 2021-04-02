@@ -41,7 +41,7 @@ export default {
     methods: {
         generate_rencontre: function() {
             this.loading = true;
-            let key = 0;
+
             get_data_from_server(this.url).then((data) => {
                 this.loading = false;
                 if (data[0] == null) {
@@ -49,12 +49,6 @@ export default {
                     console.log("Nothing found");
                     this.$emit("newMonsters", this.monsters);
                 } else {
-                    for (const monster of data) {
-                        monster.show = false;
-                        monster.key = key;
-                        key++;
-                        this.nothing = false;
-                    }
                     this.monsters = data;
                     this.$emit("newMonsters", this.monsters);
                 }
